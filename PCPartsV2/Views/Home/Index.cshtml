@@ -6,11 +6,11 @@
         <h3>PCParts, <span>Best Prices</span></h3>
     </div>
 </div>
-<div class="new-products">
+<div class="new-products" style="padding: 3em 0;">
     <div class="container">
         <h3>New Products</h3>
 
-        <div class="agileinfo_new_products_grids">
+        <div class="agileinfo_new_products_grids" style="margin: 1em 0 0;">
             @using PCPartsV2.Models
             @foreach (var item in ViewBag.RecentProducts as IEnumerable<Products>)
             {
@@ -52,11 +52,11 @@
 
     </div>
 </div>
-<div class="new-products">
+<div class="new-products" style="padding: 2em 0;">
     <div class="container">
         <h3>Discounts</h3>
 
-        <div class="agileinfo_new_products_grids">
+        <div class="agileinfo_new_products_grids" style="margin: 1em 0 0;">
             @using PCPartsV2.Models
             @foreach (var item in ViewBag.DiscountedProducts as IEnumerable<Products>)
             {

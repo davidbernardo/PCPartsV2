@@ -64,7 +64,7 @@ namespace PCPartsV2.Controllers
                 Session["cart"] = null;
                 Session["cartCount"] = 0;
 
-                return RedirectToRoute("Index"); //redirect para a home
+                return Redirect("~/Home/Index"); //redirect para a home
             }
             catch (Exception ex)
             {
