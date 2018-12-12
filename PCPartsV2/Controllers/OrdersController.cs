@@ -75,8 +75,17 @@ namespace PCPartsV2.Controllers
         // GET: Orders
         public ActionResult Index()
         {
-            var orders = db.Orders.Include(u => u.User);
-            return View(orders.ToList());
+            if (User.IsInRole("admin"))
+            {
+                var orders = db.Orders.Include(u => u.User);
+                return View(orders.ToList());
+            }
+            else
+            {
+                var userID = User.Identity.GetUserId();
+                var orders = db.Orders.Include(u => u.User).Where(o => o.UserId == userID);
+                return View(orders.ToList());
+            }
         }
 
         // GET: Orders/Details/5
