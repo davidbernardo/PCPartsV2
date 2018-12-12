@@ -28,9 +28,9 @@
                                 }
                                 else
                                 {
-                                    double discount = (double)@item.Price;
+                                    double discount = (double)@item.Discount;
                                     double percentage = discount / 100;
-                                    double discountedPrice = @item.Price * percentage;
+                                    double discountedPrice = @item.Price - (@item.Price * percentage);
                                     <p><span>@item.Price€</span> <i class="item_price">@discountedPrice€</i></p>
                                 }
                             }
@@ -70,14 +70,14 @@
                             @{
                                 if (@item.Discount == 0)
                                 {
-                                    <p><i class="item_price">@item.Price</i></p>
+                                    <p><i class="item_price">@item.Price€</i></p>
                                 }
                                 else
                                 {
-                                    double discount = (double)@item.Price;
+                                    double discount = (double)@item.Discount;
                                     double percentage = discount / 100;
-                                    double discountedPrice = @item.Price * percentage;
-                                    <p><span>@item.Price</span> <i class="item_price">@discountedPrice</i></p>
+                                    double discountedPrice = @item.Price - ( @item.Price * percentage);
+                                    <p><span>@item.Price€</span> <i class="item_price">@discountedPrice€</i></p>
                                 }
                             }
                             <form action="#" method="post">

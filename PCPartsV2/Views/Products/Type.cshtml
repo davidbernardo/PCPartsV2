@@ -18,9 +18,9 @@
                         }
                         else
                         {
-                            double discount = (double)@item.Price;
+                            double discount = (double)@item.Discount;
                             double percentage = discount / 100;
-                            double discountedPrice = @item.Price * percentage;
+                            double discountedPrice = @item.Price - (@item.Price * percentage);
                             <p><span>@item.Price€</span> <i class="item_price">@discountedPrice€</i></p>
                         }
                     }
