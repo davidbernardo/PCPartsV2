@@ -1,0 +1,136 @@
+﻿@{
+
+}
+<div class="banner">
+    <div class="container">
+        <h3>PCParts, <span>Best Prices</span></h3>
+    </div>
+</div>
+<div class="new-products">
+    <div class="container">
+        <h3>New Products</h3>
+
+        <div class="agileinfo_new_products_grids">
+            @using PCPartsV2.Models
+            @foreach (var item in ViewBag.RecentProducts as IEnumerable<Products>)
+            {
+                <div class="col-md-3 agileinfo_new_products_grid">
+                    <div class="agile_ecommerce_tab_left agileinfo_new_products_grid1">
+                        <div>
+                            <img src="~/ProductsPhotos/@item.Image" alt=" " class="img-responsive" />
+                        </div>
+                        <h5>@Html.ActionLink(item.Name, "Details", "Products", new { id = item.ProductID }, null)</h5>
+                        <div class="simpleCart_shelfItem">
+                            @{
+                                if (@item.Discount == 0)
+                                {
+                                    <p><i class="item_price">@item.Price€</i></p>
+                                }
+                                else
+                                {
+                                    double discount = (double)@item.Price;
+                                    double percentage = discount / 100;
+                                    double discountedPrice = @item.Price * percentage;
+                                    <p><span>@item.Price€</span> <i class="item_price">@discountedPrice€</i></p>
+                                }
+                            }
+                            @if (Request.IsAuthenticated)
+                            {
+                                <form action="#" method="post">
+                                    <a href="@Url.Action("AddToCart", "Cart", new { ProductID = item.ProductID, RedirectTo = "home/index" })" class="w3ls-cart">
+                                        Add To Cart
+                                    </a>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+                                }
+            <div class="clearfix"> </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="new-products">
+    <div class="container">
+        <h3>Discounts</h3>
+
+        <div class="agileinfo_new_products_grids">
+            @using PCPartsV2.Models
+            @foreach (var item in ViewBag.DiscountedProducts as IEnumerable<Products>)
+            {
+                <div class="col-md-3 agileinfo_new_products_grid">
+                    <div class="agile_ecommerce_tab_left agileinfo_new_products_grid1">
+                        <div>
+                            <img src="~/ProductsPhotos/@item.Image" alt=" " class="img-responsive" />
+                        </div>
+                        <h5>@Html.ActionLink(item.Name, "Details", "Products", new { id = item.ProductID }, null)</h5>
+                        <div class="simpleCart_shelfItem">
+                            @{
+                                if (@item.Discount == 0)
+                                {
+                                    <p><i class="item_price">@item.Price</i></p>
+                                }
+                                else
+                                {
+                                    double discount = (double)@item.Price;
+                                    double percentage = discount / 100;
+                                    double discountedPrice = @item.Price * percentage;
+                                    <p><span>@item.Price</span> <i class="item_price">@discountedPrice</i></p>
+                                }
+                            }
+                            <form action="#" method="post">
+                                <a href="@Url.Action("AddToCart", "Cart", new { ProductID = item.ProductID, RedirectTo = "home/index" })" class="w3ls-cart">
+                                    Add To Cart
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                                }
+            <div class="clearfix"> </div>
+
+        </div>
+
+    </div>
+</div>
+@*<div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
+
+    <div>
+        <h1>Recent Products</h1>
+        <div class="row">
+            @foreach (var item in ViewBag.RecentProducts)
+            {
+                <div class="col-md-4">
+                    <h2>@item.Name</h2>
+
+
+                    <a  href="@Url.Action("AddToCart", "Cart",new { ProductID= item.ProductID, RedirectTo= "home/index" })" class="btn btn-info btn-lg" style="margin-left:60px">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Add To Cart
+                    </a>
+                    @Html.ActionLink("Ver", "Details","Products", new { id = item.ProductID }, null)
+                </div>
+            }
+        </div>
+    </div>
+
+    <div>
+        <h1>Discounted Products</h1>
+        <div class="row">
+            @foreach (var item in ViewBag.DiscountedProducts)
+            {
+                <div class="col-md-4">
+                    <h2>@item.Name</h2>
+
+                    @Html.ActionLink("Ver", "Details","Products", new { id = item.ProductID }, null)
+
+                </div>
+            }
+        </div>
+    </div>
+*@

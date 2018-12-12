@@ -1,0 +1,137 @@
+﻿@model PCPartsV2.Models.Products
+
+<!-- single -->
+<div class="single">
+    <div class="container">
+        <div class="col-md-4 single-left">
+            <div class="flexslider">
+                <div class="thumb-image"> <img src="~/ProductsPhotos/@Model.Image" data-imagezoom="true" class="img-responsive" alt=""> </div>
+            </div>
+        </div>
+        <div class="col-md-8 single-right">
+            <h3>@Model.Name</h3>
+            <div class="description">
+                <h5><i>Description</i></h5>
+                <p>
+                    @Model.Description
+                </p>
+            </div>
+            <div class="color-quality">
+                <div class="color-quality-left">
+                    <h5>Details: </h5>
+                    <ul>
+                        <li>@Model.Details</li>
+                    </ul>
+                </div>
+                
+                <div class="clearfix"> </div>
+            </div>
+            <div class="simpleCart_shelfItem">
+            @{
+                if (@Model.Discount == 0)
+                {
+                    <p><i class="item_price">@Model.Price€</i></p>
+                }
+                else
+                {
+                    double discount = (double)Model.Price;
+                    double percentage = discount / 100;
+                    double discountedPrice = Model.Price * percentage;
+                    <p><span>@Model.Price€</span> <i class="item_price">@discountedPrice€</i></p>
+                }
+            }
+            @if (Request.IsAuthenticated)
+            {
+                <form action="#" method="post">
+                    <a class="w3ls-cart" href="@Url.Action("AddToCart", "Cart", new { ProductID = @Model.ProductID, RedirectTo = "home/index" })">
+                        Add To Cart
+                    </a>
+                </form>
+            }
+            </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+                @*
+                    @{
+                        ViewBag.Title = "Details";
+                    }
+
+                    <h2>Details</h2>
+
+                    <div>
+                        <h4>Products</h4>
+                        <hr />
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ProductType.Type)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.ProductType.Type)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Suppliers.Name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Suppliers.Name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Price)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Details)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Details)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Stock)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Stock)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Image)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.Image)
+                            </dd>
+
+                        </dl>
+                    </div>
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                *@

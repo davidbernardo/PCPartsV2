@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PCPartsV2.Models.Orders>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.Status)
+            </th>
+            <th>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </th>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.OrderID })
+            </td>
+        </tr>
+    }
+
+</table>
+

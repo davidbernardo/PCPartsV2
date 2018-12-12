@@ -1,0 +1,111 @@
+﻿@model IEnumerable<PCPartsV2.Models.Products>
+
+<div class="w3ls_mobiles_grid_right_grid3">
+    <h1 class="text-center" style="padding-bottom:20px">@Html.DisplayFor(modelItem => modelItem.FirstOrDefault().ProductType.Type)</h1>
+    @foreach (var item in Model)
+            {
+        <div class="col-md-3 agileinfo_new_products_grid">
+            <div class="agile_ecommerce_tab_left agileinfo_new_products_grid1">
+                <div>
+                    <img src="~/ProductsPhotos/@item.Image" alt=" " class="img-responsive" />
+                </div>
+                <h5>@Html.ActionLink(item.Name, "Details", "Products", new { id = item.ProductID }, null)</h5>
+                <div class="simpleCart_shelfItem">
+                    @{
+                        if (@item.Discount == 0)
+                        {
+                            <p><i class="item_price">@item.Price€</i></p>
+                        }
+                        else
+                        {
+                            double discount = (double)@item.Price;
+                            double percentage = discount / 100;
+                            double discountedPrice = @item.Price * percentage;
+                            <p><span>@item.Price€</span> <i class="item_price">@discountedPrice€</i></p>
+                        }
+                    }
+                    @if (Request.IsAuthenticated)
+                    {
+                        <form action="#" method="post">
+                            <a class="w3ls-cart" href="@Url.Action("AddToCart", "Cart", new { ProductID = item.ProductID, RedirectTo = "home/index" })">
+                                Add To Cart
+                            </a>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+                        }
+
+    <div class="clearfix"> </div>
+</div>
+@*
+@{
+    ViewBag.Title = "Type";
+}
+
+<h2>@Html.DisplayNameFor(model => model.ProductType.Type)</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Discount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Details)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Details)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+            </td>
+        </tr>
+    }
+
+</table>
+*@
