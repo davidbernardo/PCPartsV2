@@ -16,7 +16,7 @@ namespace PCPartsV2.Controllers
 
         // GET: Add product to Cart
         /// <summary>
-        /// Gets a product by its Id and adds the product to the cart using the session variable "cart"
+        /// Gets a product by its Id and adds the product to the cart using the session variable "cart", the session variable "cartCount" is used to know how many products are in the cart
         /// </summary>
         /// <param name="ProductID"></param>
         /// <param name="RedirectTo"></param>

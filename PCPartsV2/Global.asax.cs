@@ -15,6 +15,7 @@ namespace PCPartsV2
 
         protected void Application_Start()
         {
+            //Application variable with the product types in order to create the dropdown menu in the nav bar
             Application["menu"] = db.ProductType.ToList();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

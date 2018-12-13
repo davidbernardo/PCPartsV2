@@ -33,15 +33,5 @@ namespace PCPartsV2.Controllers
             return View();
         }
 
-        /*// GET: Product Types
-        public ActionResult AddToCart()
-        {
-            var li = db.ProductType.ToList();
-            Session["product_types"] = li;
-
-            return View();
-        }*/
-
-
     }
 }

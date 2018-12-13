@@ -16,6 +16,10 @@ namespace PCPartsV2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ProductTypes
+        /// <summary>
+        /// Returns the product type list
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View(db.ProductType.ToList());
@@ -37,14 +41,21 @@ namespace PCPartsV2.Controllers
         }
 
         // GET: ProductTypes/Create
+        /// <summary>
+        /// Returns the view for the product type post
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: ProductTypes/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates the new product type
+        /// </summary>
+        /// <param name="productType"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductTypeID,Type")] ProductType productType)
@@ -60,6 +71,11 @@ namespace PCPartsV2.Controllers
         }
 
         // GET: ProductTypes/Edit/5
+        /// <summary>
+        /// Returns the information about a product type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,8 +91,11 @@ namespace PCPartsV2.Controllers
         }
 
         // POST: ProductTypes/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Edits a product type
+        /// </summary>
+        /// <param name="productType"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductTypeID,Type")] ProductType productType)
@@ -91,6 +110,11 @@ namespace PCPartsV2.Controllers
         }
 
         // GET: ProductTypes/Delete/5
+        /// <summary>
+        /// Returns the information about a product type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +130,11 @@ namespace PCPartsV2.Controllers
         }
 
         // POST: ProductTypes/Delete/5
+        /// <summary>
+        /// Deletes a product type
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

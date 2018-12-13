@@ -16,12 +16,23 @@ namespace PCPartsV2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Orders/Create
+        /// <summary>
+        /// View for the create post
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Orders/Create
+        /// <summary>
+        /// Creates an order using three input parameters, the current user Id and the session variable "cart"
+        /// </summary>
+        /// <param name="Address"></param>
+        /// <param name="PostalCode"></param>
+        /// <param name="PaymentMethod"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(string Address, string PostalCode, string PaymentMethod)
@@ -30,13 +41,14 @@ namespace PCPartsV2.Controllers
             {
                 var cartProducts = (List<ProductsQuantity>)Session["cart"];
 
+                //Calculates the total price of the cart
                 double Price = 0;
-
                 foreach (var po in cartProducts)
                 {
                     Price = Price + po.Product.Price * po.Quantity;
                 }
 
+                //Creates the object order
                 Orders order = new Orders
                 {
                     Address = Address,
@@ -44,13 +56,15 @@ namespace PCPartsV2.Controllers
                     PaymentMethod = PaymentMethod,
                     PostalCode = PostalCode,
                     Status = "Processing",
-                    Details = "wewewe",
+                    Details = "Unused",
                     Price = Price,
                     UserId = User.Identity.GetUserId()
                 };
 
+                //Adds the created order to the Orders table
                 var addedOrder= db.Orders.Add(order);
 
+                //Creates the data in the table Product_Order, result of the N-M relation between products and order
                 foreach (var po in cartProducts)
                 {
                     Product_Order prd_ord = new Product_Order { Orders = addedOrder, ProductFK = po.Product.ProductID, Quantity = po.Quantity};
@@ -58,10 +72,11 @@ namespace PCPartsV2.Controllers
                 }
                 db.SaveChanges();
 
+                //Resets the values of the cart so that the cart is empty again
                 Session["cart"] = null;
                 Session["cartCount"] = 0;
 
-                return Redirect("~/Home/Index"); //redirect para a home
+                return Redirect("~/Home/Index");
             }
             catch (Exception ex)
             {
@@ -70,6 +85,10 @@ namespace PCPartsV2.Controllers
         }
 
         // GET: Orders
+        /// <summary>
+        /// Returns all the orders if the user is an admin or returns the clients orders in case its a user
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             if (User.IsInRole("admin"))
@@ -129,9 +148,7 @@ namespace PCPartsV2.Controllers
             return View(order);
         }
 
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "OrderID, Status, Address, Details, PaymentMethod, PostalCode, UserId")] Orders order)
@@ -147,86 +164,5 @@ namespace PCPartsV2.Controllers
             //ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
             return View(order);
         }
-
-        /*
-        // GET: Products/Create
-        public ActionResult Create()
-        {
-            ViewBag.ProductTypeFK = new SelectList(db.ProductType, "ProductTypeID", "Type");
-            ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name");
-            return View();
-        }
-
-        // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,Name,Price,Description,Details,Stock,Image,SupplierFK,ProductTypeFK")] Products products)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Products.Add(products);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.ProductTypeFK = new SelectList(db.ProductType, "ProductTypeID", "Type", products.ProductTypeFK);
-            ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
-            return View(products);
-        }
-
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,Name,Price,Description,Details,Stock,Image,SupplierFK,ProductTypeFK")] Products products)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(products).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.ProductTypeFK = new SelectList(db.ProductType, "ProductTypeID", "Type", products.ProductTypeFK);
-            ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
-            return View(products);
-        }
-
-        // GET: Products/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Products products = db.Products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
-            return View(products);
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Products products = db.Products.Find(id);
-            db.Products.Remove(products);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }*/
     }
 }

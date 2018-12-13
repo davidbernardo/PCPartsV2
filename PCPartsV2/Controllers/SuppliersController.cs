@@ -16,12 +16,21 @@ namespace PCPartsV2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Suppliers
+        /// <summary>
+        /// Returns the suppliers list
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View(db.Suppliers.ToList());
         }
 
         // GET: Suppliers/Details/5
+        /// <summary>
+        /// Returns the information about a specific supllier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,15 +45,22 @@ namespace PCPartsV2.Controllers
             return View(suppliers);
         }
 
-        // GET: Suppliers/Create
+        // GET: Suppliers/Createe
+        /// <summary>
+        /// Returns the view for the supplier post
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Create()
         {
             return View();
         }
 
         // POST: Suppliers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// Creates the new supplier
+        /// </summary>
+        /// <param name="productType"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SupplierID,Name,Address,PostalCode,Phone,Email")] Suppliers suppliers)
@@ -60,6 +76,11 @@ namespace PCPartsV2.Controllers
         }
 
         // GET: Suppliers/Edit/5
+        /// <summary>
+        /// Returns the information about a supplier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,8 +96,12 @@ namespace PCPartsV2.Controllers
         }
 
         // POST: Suppliers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: ProductTypes/Edit/5
+        /// <summary>
+        /// Edits a supplier
+        /// </summary>
+        /// <param name="productType"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "SupplierID,Name,Address,PostalCode,Phone,Email")] Suppliers suppliers)
@@ -91,6 +116,11 @@ namespace PCPartsV2.Controllers
         }
 
         // GET: Suppliers/Delete/5
+        /// <summary>
+        /// Returns the information about a supplier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +136,11 @@ namespace PCPartsV2.Controllers
         }
 
         // POST: Suppliers/Delete/5
+        /// <summary>
+        /// Deletes a supplier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
