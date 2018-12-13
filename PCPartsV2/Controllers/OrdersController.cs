@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using static PCPartsV2.Controllers.CartController;
-
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
 using Microsoft.AspNet.Identity;
 
 namespace PCPartsV2.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -113,6 +110,44 @@ namespace PCPartsV2.Controllers
 
             return View();
         }
+
+        // GET: Orders/Edit/5
+        [Authorize(Roles = "admin")]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Orders order = db.Orders.Find(id);
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.OrderId = new SelectList(db.Users, "Id", "Email", order.UserId);
+            //ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
+            return View(order);
+        }
+
+        // POST: Products/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "OrderID, Status, Address, Details, PaymentMethod, PostalCode, UserId")] Orders order)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(order).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.OrderId = new SelectList(db.Users, "Id", "Email", order.UserId);
+            //ViewBag.ProductTypeFK = new SelectList(db.ProductType, "ProductTypeID", "Type", products.ProductTypeFK);
+            //ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
+            return View(order);
+        }
+
         /*
         // GET: Products/Create
         public ActionResult Create()
@@ -136,23 +171,6 @@ namespace PCPartsV2.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ProductTypeFK = new SelectList(db.ProductType, "ProductTypeID", "Type", products.ProductTypeFK);
-            ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
-            return View(products);
-        }
-
-        // GET: Products/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Products products = db.Products.Find(id);
-            if (products == null)
-            {
-                return HttpNotFound();
-            }
             ViewBag.ProductTypeFK = new SelectList(db.ProductType, "ProductTypeID", "Type", products.ProductTypeFK);
             ViewBag.SupplierFK = new SelectList(db.Suppliers, "SupplierID", "Name", products.SupplierFK);
             return View(products);

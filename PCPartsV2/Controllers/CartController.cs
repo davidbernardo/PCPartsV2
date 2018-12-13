@@ -8,29 +8,19 @@ using System.Web.Mvc;
 namespace PCPartsV2.Controllers
 {
     //https://www.c-sharpcorner.com/article/creating-shopping-cart-application-from-scratch-in-mvc-part2/
-
+    [Authorize]
     public class CartController : Controller
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
-        
-//            foreach(var p in cartProducts)
-//            {
-//                var item = quantityList.Where(x => x.Product.ProductID == p.Product.ProductID).FirstOrDefault(); //verifica se lá esta o produto
-//                if(item != null)
-//                {
-//                    item.Quantity = item.Quantity + 1;
-//                }
-//                else
-//                {
-//                    quantityList.Add(new ProductsQuantity { Quantity = 1, Product = p
-//});
-//                }
-
-
         // GET: Add product to Cart
+        /// <summary>
+        /// Gets a product by its Id and adds the product to the cart using the session variable "cart"
+        /// </summary>
+        /// <param name="ProductID"></param>
+        /// <param name="RedirectTo"></param>
+        /// <returns></returns>
         public ActionResult AddToCart(int ProductID, string RedirectTo)
         {
             var product = db.Products.Where(p => p.ProductID == ProductID).FirstOrDefault();
@@ -44,7 +34,8 @@ namespace PCPartsV2.Controllers
             else
             {
                 List<ProductsQuantity> li = (List<ProductsQuantity>)Session["cart"];
-                var item = li.Where(x => x.Product.ProductID == product.ProductID).FirstOrDefault(); //verifica se já existe o item no carrigo
+                // Checks if the added product already exists in the cart, if it does exist the quantity atribute is incremented, else it creates a new object with quantity = 1
+                var item = li.Where(x => x.Product.ProductID == product.ProductID).FirstOrDefault();
                 if(item == null)
                 {
                     li.Add(new ProductsQuantity { Quantity = 1, Product = product });
@@ -53,23 +44,25 @@ namespace PCPartsV2.Controllers
                 {
                     item.Quantity = item.Quantity + 1;
                 }
-                
+                // Saves 
                 Session["cart"] = li;
                 Session["cartCount"] = Convert.ToInt32(Session["cartCount"]) + 1;
             }
             return Redirect("~/"+RedirectTo);
         }
 
+        // Class that is used to save the data of the cart products
         public class ProductsQuantity
         {
             public int Quantity { get; set; }
             public Products Product { get; set; }
         }
 
-        // GET: List of cart products
+        // GET: Returns the list of cart products
         public ActionResult Products()
         {
             var cartProducts = (List<ProductsQuantity>)Session["cart"];
+            cartProducts = cartProducts ?? new List<ProductsQuantity>();
 
             return View(cartProducts);
         }

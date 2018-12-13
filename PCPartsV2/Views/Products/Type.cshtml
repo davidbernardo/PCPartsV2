@@ -14,20 +14,20 @@
                     @{
                         if (@item.Discount == 0)
                         {
-                            <p><i class="item_price">@item.Price€</i></p>
+                            <p><i class="item_price">@Math.Round(@item.Price, 2)€</i></p>
                         }
                         else
                         {
                             double discount = (double)@item.Discount;
                             double percentage = discount / 100;
                             double discountedPrice = @item.Price - (@item.Price * percentage);
-                            <p><span>@item.Price€</span> <i class="item_price">@discountedPrice€</i></p>
+                            <p><span>@Math.Round(@item.Price, 2)€</span> <i class="item_price">@Math.Round(@discountedPrice, 2)€</i></p>
                         }
                     }
                     @if (Request.IsAuthenticated)
                     {
                         <form action="#" method="post">
-                            <a class="w3ls-cart" href="@Url.Action("AddToCart", "Cart", new { ProductID = item.ProductID, RedirectTo = "home/index" })">
+                            <a class="w3ls-cart" href="@Url.Action("AddToCart", "Cart", new { ProductID = item.ProductID, RedirectTo = "products/type/"+@item.ProductType.ProductTypeID })">
                                 Add To Cart
                             </a>
                         </form>

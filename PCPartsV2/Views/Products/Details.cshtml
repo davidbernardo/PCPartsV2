@@ -1,6 +1,5 @@
 ﻿@model PCPartsV2.Models.Products
 
-<!-- single -->
 <div class="single" style="padding: 2em 0;">
     <div class="container">
         <div class="col-md-4 single-left">
@@ -11,39 +10,41 @@
         <div class="col-md-8 single-right">
             <h3>@Model.Name</h3>
             <div class="description">
-                <h5><i>Description</i></h5>
+                <h5>Description</h5>
                 <p>
                     @Model.Description
                 </p>
             </div>
-            <div class="color-quality">
-                <div class="color-quality-left">
-                    <h5>Details: </h5>
-                    <ul>
-                        <li>@Model.Details</li>
-                    </ul>
-                </div>
-                
-                <div class="clearfix"> </div>
+            <div class="description">
+                    <h5>Details </h5>
+                    <p>
+                      @Model.Details
+                    </p>
+            </div>
+            <div class="description">
+                <h5>Supplier </h5>
+                <p>
+                    @Model.Suppliers.Name
+                </p>
             </div>
             <div class="simpleCart_shelfItem">
             @{
                 if (@Model.Discount == 0)
                 {
-                    <p><i class="item_price">@Model.Price€</i></p>
+                    <p><i class="item_price">@Math.Round(@Model.Price, 2)€</i></p>
                 }
                 else
                 {
                     double discount = (double)Model.Discount;
                     double percentage = discount / 100;
                     double discountedPrice = Model.Price - (Model.Price * percentage);
-                    <p><span>@Model.Price€</span> <i class="item_price">@discountedPrice€</i></p>
+                    <p><span>@Math.Round(@Model.Price, 2)€</span> <i class="item_price">@Math.Round(@discountedPrice, 2)€</i></p>
                 }
             }
             @if (Request.IsAuthenticated)
             {
                 <form action="#" method="post">
-                    <a class="w3ls-cart" href="@Url.Action("AddToCart", "Cart", new { ProductID = @Model.ProductID, RedirectTo = "home/index" })">
+                    <a class="w3ls-cart" href="@Url.Action("AddToCart", "Cart", new { ProductID = @Model.ProductID, RedirectTo = "products/details/"+@Model.ProductID })">
                         Add To Cart
                     </a>
                 </form>
@@ -53,6 +54,12 @@
         <div class="clearfix"> </div>
     </div>
 </div>
+<p>
+    @if (User.IsInRole("admin"))
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID })<span> | </span>@Html.ActionLink("Delete", "Delete", new { id = Model.ProductID })
+    }
+</p>
                 @*
                     @{
                         ViewBag.Title = "Details";

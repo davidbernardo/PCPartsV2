@@ -10,6 +10,7 @@ using PCPartsV2.Models;
 
 namespace PCPartsV2.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ProductTypesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

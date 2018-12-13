@@ -436,7 +436,7 @@ ul.multi-column-dropdown h6 {
     padding: 20px 30px;
     font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color:#ff5063;
@@ -2741,11 +2741,11 @@ h2.typoh2{
     font-size: 1em;
     margin: 0;
 }
-.description p{
-	color: #999;
-    line-height: 1.8em;
-    margin: 1em 0 0;
-}
+    .description p {
+        color: #5c5555;
+        line-height: 1.8em;
+        margin: 1em 0 0;
+    }
 .color-quality-left{
 	float:left;
 }

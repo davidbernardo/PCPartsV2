@@ -23,3 +23,9 @@ textarea {
     max-width: 280px;
 }
 
+.page-header {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}

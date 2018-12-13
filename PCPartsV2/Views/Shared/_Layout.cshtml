@@ -9,115 +9,123 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <nav class="navbar navbar-default">
-                    <!-- Brand and toggle get grouped for better mobile display -->
-                    <div class="navbar-header nav_2">
-                        <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-                        <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("PCParts", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style= "" })</li>
-                            <!-- Mega Menu -->
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
-                                <ul class="dropdown-menu multi-column columns-1">
+        <div class="container">
+            <nav class="navbar navbar-default">
+                <div class="navbar-header nav_2">
+                    <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("PCParts", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "" })</li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products <b class="caret"></b></a>
+                            <ul class="dropdown-menu multi-column columns-1">
 
-                                    @using PCPartsV2.Models
-                                    @{
-                                        List<ProductType> pdr_tp = HttpContext.Current.Application["menu"] as List<ProductType>;
+                                @using PCPartsV2.Models
+                                @{
+                                    List<ProductType> pdr_tp = HttpContext.Current.Application["menu"] as List<ProductType>;
 
 
-                                        foreach (var type in pdr_tp)
-                                        {
-                                    <!--<li>Html.ActionLink(type.Type, "Index", "Products")</li>-->
-                                            <li><a href="~/Products/Type/@type.ProductTypeID">@type.Type</a></li>
-                                        }
+                                    foreach (var type in pdr_tp)
+                                    {
+                                        <li><a href="~/Products/Type/@type.ProductTypeID">@type.Type</a></li>
                                     }
-                                </ul>
-                            </li>
-                            @if (Request.IsAuthenticated)
-                            {
-                                    <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
-                               
-                            }
-                            <li>@Html.ActionLink("About Us", "About", "Home")</li>
-                            @Html.Partial("_LoginPartial")
-          
-</div>
-                </nav>
-            </div>
-        </div>
-        @*<div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        @Html.ActionLink("PCParts", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Products", "Index", "Products")</li>
-                        </ul>
-                        <ul>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    Storage
-                                </a>
-                                <ul class="dropdown-menu" role="menu">
-
-                                    @using PCPartsV2.Models
-                                    @{
-                                        List<ProductType> pdr_tp = HttpContext.Current.Application["menu"] as List<ProductType>;
-
-
-                                        foreach (var type in pdr_tp)
-                                        {
-                                    <!--<li>Html.ActionLink(type.Type, "Index", "Products")</li>-->
-                                            <li><a href="~/Products/Type/@type.ProductTypeID">@type.Type</a></li>
-                                        }
-                                    }
-
-
-                                    <li>@Html.ActionLink("Storage", "View", "Storage")</li>
-                                </ul>
-                            </li>
-                        </ul>
-
+                                }
+                            </ul>
+                        </li>
                         @if (Request.IsAuthenticated)
                         {
-                            <ul class="nav navbar-nav">
-                                <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
-                                <li class="active">
-                                    <a href="@Url.Action("Products", "Cart")" class="btn btn-info btn-lg">
-                                        <span class="glyphicon glyphicon-shopping-cart" style="color:green"></span>Cart <span class="badge">@Session["cartCount"]</span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+
+                        }
+                        <li>@Html.ActionLink("About Us", "About", "Home")</li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">More<b class="caret"></b></a>
+                                <ul class="dropdown-menu multi-column columns-1">
+                                    <li style="font-size: 14px;list-style: none;">@Html.ActionLink("Suppliers", "Index", "Suppliers")</li>
+                                    <li style="font-size: 14px;list-style: none;">@Html.ActionLink("Product Types", "Index", "ProductTypes")</li>
+                                </ul>
+                            </li>
                         }
                         @Html.Partial("_LoginPartial")
-                    </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("PCParts", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Products", "Index", "Products")</li>
+                    </ul>
+                    <ul>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                Storage
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                @using PCPartsV2.Models
+                                @{
+                                    List<ProductType> pdr_tp = HttpContext.Current.Application["menu"] as List<ProductType>;
+
+
+                                    foreach (var type in pdr_tp)
+                                    {
+                                <!--<li>Html.ActionLink(type.Type, "Index", "Products")</li>-->
+                                        <li><a href="~/Products/Type/@type.ProductTypeID">@type.Type</a></li>
+                                    }
+                                }
+
+
+                                <li>@Html.ActionLink("Storage", "View", "Storage")</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Orders", "Index", "Orders")</li>
+                            <li class="active">
+                                <a href="@Url.Action("Products", "Cart")" class="btn btn-info btn-lg">
+                                    <span class="glyphicon glyphicon-shopping-cart" style="color:green"></span>Cart <span class="badge">@Session["cartCount"]</span>
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                    @Html.Partial("_LoginPartial")
                 </div>
             </div>
-        *@
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer class="text-center">
-                <p>&copy; @DateTime.Now.Year - PCParts All Rights Reserved</p>
-            </footer>
         </div>
+    *@
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="text-center">
+            <p>&copy; @DateTime.Now.Year - PCParts All Rights Reserved</p>
+        </footer>
+    </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
+
 </html>
