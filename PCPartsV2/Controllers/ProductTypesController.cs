@@ -25,21 +25,6 @@ namespace PCPartsV2.Controllers
             return View(db.ProductType.ToList());
         }
 
-        // GET: ProductTypes/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ProductType productType = db.ProductType.Find(id);
-            if (productType == null)
-            {
-                return HttpNotFound();
-            }
-            return View(productType);
-        }
-
         // GET: ProductTypes/Create
         /// <summary>
         /// Returns the view for the product type post
