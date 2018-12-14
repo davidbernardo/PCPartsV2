@@ -17,10 +17,12 @@ namespace PCPartsV2.Models
 
         public Orders Orders { get; set; }
         [ForeignKey("Orders"), Required]
+        [Display(Name = "Order")]
         public int OrderFK { get; set; }
 
         public Products Products { get; set; }
         [ForeignKey("Products"), Required]
+        [Display(Name = "Product")]
         public int ProductFK { get; set; }
     }
 }

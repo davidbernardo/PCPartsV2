@@ -67,6 +67,7 @@ namespace PCPartsV2.Migrations
             orders.ForEach(oo => context.Orders.Add(oo));
             context.SaveChanges();
 
+            //SUPPLIERS
             var suppliers = new List<Suppliers>
             {
                 new Suppliers {SupplierID=1,Phone="912345678",Name="PartsProcessador",Address="Rua dos Processadores nº1",Email="supplier1@mail.pt",PostalCode="2300-639" },
@@ -76,6 +77,7 @@ namespace PCPartsV2.Migrations
             suppliers.ForEach(ss => context.Suppliers.Add(ss));
             context.SaveChanges();
 
+            //PRODUCTTYPE
             var producttype = new List<ProductType>
             {
                 new ProductType {ProductTypeID=1,Type="Processor"  },
@@ -85,6 +87,7 @@ namespace PCPartsV2.Migrations
             producttype.ForEach(pt => context.ProductType.Add(pt));
             context.SaveChanges();
 
+            //PRODUCTS
             var products = new List<Products>
             {
                 new Products {Description="Processador1 topo de game com muitas funcionalidades.",Details="Frequência Clock: 3.2 GHz",Name="Processador Intel Celeron G4920 Dual-Core 3.2GHz 2MB Skt1151",Price=59.90,ProductID=1,SupplierFK=1,Image="image1.jpg",Stock=1,ProductTypeFK=1, Discount=25  },
@@ -100,6 +103,7 @@ namespace PCPartsV2.Migrations
             products.ForEach(pr => context.Products.Add(pr));
             context.SaveChanges();
 
+            //ORDER
             var product_order = new List<Product_Order>
             {
                 new Product_Order {OrderFK=1,ProductFK=1,Quantity=1 },

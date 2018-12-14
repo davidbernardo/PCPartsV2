@@ -9,10 +9,6 @@ namespace PCPartsV2.Models
 {
     public class Products
     {
-        /*public Products()
-        {
-            ListProductOrder = new HashSet<Product_Order>();
-        }*/
 
         [Key, Required]
         public int ProductID { get; set; }
@@ -39,12 +35,13 @@ namespace PCPartsV2.Models
 
         public Suppliers Suppliers { get; set; }
         [ForeignKey("Suppliers"), Required]
+        [Display(Name = "Supplier")]
         public int SupplierFK { get; set; }
 
         public ProductType ProductType { get; set; }
         [ForeignKey("ProductType"), Required]
+        [Display(Name = "Product Type")]
         public int ProductTypeFK { get; set; }
 
-        //public virtual ICollection<Product_Order> ListProductOrder { get; set; }
 }
 }

@@ -9,15 +9,11 @@ namespace PCPartsV2.Models
 {
     public class Orders
     {
-        /*public Orders()
-        {
-            ListProductOrder = new HashSet<Product_Order>();
-        }*/
-
         [Key, Required]
         public int OrderID { get; set; }
 
         [Required]
+        [Display(Name ="Order Date")]
         public DateTime OrderDate { get; set; }
 
         [Required]
@@ -30,12 +26,14 @@ namespace PCPartsV2.Models
         public string Status { get; set; }
 
         [Required]
+        [Display(Name = "Payment Method")]
         public string PaymentMethod { get; set; }
 
         [Required]
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
 
         [Required]
@@ -43,8 +41,6 @@ namespace PCPartsV2.Models
         [ForeignKey("UserId")]
         public ApplicationUser User { get; set; }
 
-
-        //public virtual ICollection<Product_Order> ListProductOrder { get; set; }
 
     }
 }

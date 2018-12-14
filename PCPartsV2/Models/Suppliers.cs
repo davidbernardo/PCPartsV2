@@ -8,10 +8,6 @@ namespace PCPartsV2.Models
 {
     public class Suppliers
     {
-        /*public Suppliers()
-        {
-            ListProducts = new HashSet<Products>();
-        }*/
 
         [Key, Required]
         public int SupplierID { get; set; }
@@ -23,6 +19,7 @@ namespace PCPartsV2.Models
         public string Address { get; set; }
 
         [Required]
+        [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
 
         [Required]
@@ -30,7 +27,5 @@ namespace PCPartsV2.Models
 
         [Required]
         public string Email { get; set; }
-
-        //public virtual ICollection<Products> ListProducts { get; set; }
     }
 }
