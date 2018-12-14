@@ -15,16 +15,32 @@
             @Html.ActionLink("Back to List", "Index")
         </p>
     </div>
-    @{if (User.IsInRole("admin"))
-        {
-            <div class="description" style="margin: 0em 0;padding-bottom:20px">
-                <h3 style="font-weight:bold;">User</h3>
-                <p style="line-height: 0em;margin: 1em 0em 1em;">
-                    @ViewBag.UserName
-                </p>
-            </div>
-        }
-    }
+    <div class="row">
+        <div class="description col-md-3" style="margin: 0em 0;padding-bottom:20px">
+            <h3 style="font-weight:bold;">User</h3>
+            <p style="line-height: 0em;margin: 1em 0em 1em;">
+                @ViewBag.UserName
+            </p>
+        </div>
+        <div class="description col-md-3" style="margin: 0em 0;padding-bottom:20px">
+            <h3 style="font-weight:bold;">Address</h3>
+            <p style="line-height: 0em;margin: 1em 0em 1em;">
+                @ViewBag.OrderDetails.Address
+            </p>
+        </div>
+        <div class="description col-md-3" style="margin: 0em 0;padding-bottom:20px">
+            <h3 style="font-weight:bold;">Date</h3>
+            <p style="line-height: 0em;margin: 1em 0em 1em;">
+                @ViewBag.OrderDetails.OrderDate.ToShortDateString()
+            </p>
+        </div>
+        <div class="description col-md-3" style="margin: 0em 0;padding-bottom:20px">
+            <h3 style="font-weight:bold;">Status</h3>
+            <p style="line-height: 0em;margin: 1em 0em 1em;">
+                @ViewBag.OrderDetails.Status
+            </p>
+        </div>
+    </div>
     @foreach (var item in ViewBag.ProductDetails)
     {
         <div class="row" style="margin-bottom:1em;">
@@ -44,17 +60,8 @@
         </div>
         <div style="border-bottom: 1px solid #ccc;"></div>
     }
-    @{
-        //Calculates the price of all the products in the cart
-        double Price = 0;
-        foreach (var item in ViewBag.ProductDetails)
-        {
-            Price = Price + item.Product.Price * item.Quantity;
-
-        }
-    }
     <div class="text-right">
         <h3 style="font-weight:bold;margin-top:1em">Total Price:</h3>
-        <p style="line-height: 0em;margin: 1em 0em 1em;padding-bottom:20px">@Math.Round(@Price, 2)€</p>
+        <p style="line-height: 0em;margin: 1em 0em 1em;padding-bottom:20px">@ViewBag.OrderDetails.Price€</p>
     </div>
 </div>

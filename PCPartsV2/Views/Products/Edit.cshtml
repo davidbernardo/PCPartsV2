@@ -89,9 +89,9 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<a href="~/Products/Details/@Model.ProductType.ProductTypeID" class="w3ls-cart">
+    Back to List
+</a>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
