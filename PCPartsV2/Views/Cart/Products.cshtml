@@ -4,7 +4,56 @@
     ViewBag.Title = "Products";
 }
 
-<h2 class="page-header">My Cart</h2>
+@if (Model.Count() > 0)
+{
+    <div>
+        <h2 class="page-header">My Cart</h2>
+        @foreach (var item in Model)
+        {
+            <div class="row" style="margin-bottom:1em;">
+                <div class="col-md-2">
+                    <img src="~/ProductsPhotos/@item.Product.Image" alt=" " class="img-responsive" />
+                </div>
+                <div class="col-md-8 description" style="margin: 0em 0">
+                    <h3 style="font-weight:bold;margin-top:1em">Name</h3>
+                    <p style="line-height: 0em;margin: 1em 0em 1em;padding-bottom:20px">@item.Product.Name</p>
+                    <h3 style="font-weight:bold">Price</h3>
+                    <p style="line-height: 0em;margin: 1em 0em 1em;">@item.Product.Price€</p>
+                </div>
+                <div class="col-md-2 text-center description">
+                    <h3 style="font-weight:bold;margin-top:1.1em">Quantity</h3>
+                    <p>x @item.Quantity</p>
+                </div>
+            </div>
+            <div style="border-bottom: 1px solid #ccc;"></div>
+        }
+        @{
+            //Calculates the price of all the products in the cart
+            double Price = 0;
+            foreach (var item in Model)
+            {
+                Price = Price + item.Product.Price * item.Quantity;
+
+            }
+        }
+        <div class="text-right">
+            <h3 style="font-weight:bold;margin-top:1em">Total Price:</h3>
+            <p style="line-height: 0em;margin: 1em 0em 1em;padding-bottom:20px">@Math.Round(@Price, 2)€</p>
+            <a href="~/Orders/Create" class="w3ls-cart">
+                Checkout
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div style="text-align:center; margin: 40px 0 40px 0">
+        <p style="font-size: 20px; font-family: 'Open Sans', sans-serif;">There are no products in the cart.</p>
+    </div>
+}
+
+
+@*<h2 class="page-header">My Cart</h2>
 
 @if(Model.Count() > 0) { 
     <table class="table col-md-9">
@@ -16,26 +65,10 @@
                 @Html.DisplayNameFor(model => model.Product.Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Product.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Details)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Stock)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Product.Image)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Quantity)
             </th>
             <th></th>
         </tr>
-
     @foreach (var item in Model)
     {
         <tr>
@@ -45,35 +78,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Product.Price)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Details)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Stock)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Product.Image)
-            </td>
             <th>
                 @Html.DisplayFor(modelItem => item.Quantity)
             </th>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Product.ProductID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Product.ProductID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Product.ProductID })
-            </td>
         </tr>
-
     }
     </table>
     <div class="text-right">
         @{
+            //Calculates the price of all the products in the cart
             double Price = 0;
             foreach (var item in Model)
             {
@@ -82,7 +95,7 @@
             }
 
         }
-        Total price: @Price
+        Total price: @Math.Round(@Price, 2)€
         <a href="~/Orders/Create" class="w3ls-cart">
             Checkout
         </a>
@@ -95,3 +108,4 @@ else
         <p style="font-size: 20px; font-family: 'Open Sans', sans-serif;">There are no products in the cart.</p>
     </div>
 }
+*@

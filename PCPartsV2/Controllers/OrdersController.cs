@@ -111,21 +111,24 @@ namespace PCPartsV2.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            List<ProductsQuantity> ProductDetails = new List<ProductsQuantity>();
             var order = db.Orders.Where(o => o.OrderID == id).FirstOrDefault();
             var user = db.Users.Where(o => o.Id == order.UserId).Select(o => o.UserName).FirstOrDefault();
-            var product_order = db.Product_Order.Where(po => po.OrderFK == order.OrderID).FirstOrDefault();
-            var product = db.Products.Where(p => p.ProductTypeFK == product_order.ProductFK).FirstOrDefault();
+            var product_order = db.Product_Order.Where(po => po.OrderFK == order.OrderID).ToList();
+            
+            foreach (var prd in product_order)
+            {
+                var product = db.Products.Where(p => p.ProductID == prd.ProductFK).FirstOrDefault();
+                ProductDetails.Add(new ProductsQuantity { Quantity = prd.Quantity, Product = product });
+            }
 
-            if (order == null || user == null || product_order == null || product == null)
+            if (order == null || user == null || product_order == null)
             {
                 return HttpNotFound();
             }
-
             ViewBag.OrderDetails = order;
             ViewBag.UserName = user;
-            ViewBag.Quantity = product_order;
-            ViewBag.ProductDetails = product;
+            ViewBag.ProductDetails= ProductDetails;
 
             return View();
         }

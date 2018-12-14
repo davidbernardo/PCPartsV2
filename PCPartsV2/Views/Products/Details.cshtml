@@ -29,6 +29,7 @@
             </div>
             <div class="simpleCart_shelfItem">
             @{
+                //Depending on if the product has a discount or not it will change the layout
                 if (@Model.Discount == 0)
                 {
                     <p><i class="item_price">@Math.Round(@Model.Price, 2)€</i></p>

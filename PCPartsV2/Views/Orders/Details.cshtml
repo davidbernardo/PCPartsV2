@@ -3,21 +3,58 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2 class="page-header">Order Details</h2>
-
 <div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            User:
-        </dt>
-        <dd>
-            @ViewBag.UserName
-        </dd>
-    </dl>
+    <h2 class="page-header">Order Details</h2>
+    <div style="padding-bottom:20px">
+        <p>
+            @if (User.IsInRole("admin"))
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = ViewBag.OrderDetails.OrderID })
+                <span> | </span>   
+                }
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+    @{if (User.IsInRole("admin"))
+        {
+            <div class="description" style="margin: 0em 0;padding-bottom:20px">
+                <h3 style="font-weight:bold;">User</h3>
+                <p style="line-height: 0em;margin: 1em 0em 1em;">
+                    @ViewBag.UserName
+                </p>
+            </div>
+        }
+    }
+    @foreach (var item in ViewBag.ProductDetails)
+    {
+        <div class="row" style="margin-bottom:1em;">
+            <div class="col-md-2">
+                <img src="~/ProductsPhotos/@item.Product.Image" alt=" " class="img-responsive" />
+            </div>
+            <div class="col-md-8 description" style="margin: 0em 0">
+                <h3 style="font-weight:bold;margin-top:1em">Name</h3>
+                <p style="line-height: 0em;margin: 1em 0em 1em;padding-bottom:20px">@item.Product.Name</p>
+                <h3 style="font-weight:bold">Price</h3>
+                <p style="line-height: 0em;margin: 1em 0em 1em;">@item.Product.Price€</p>
+            </div>
+            <div class="col-md-2 text-center description">
+                <h3 style="font-weight:bold;margin-top:1.1em">Quantity</h3>
+                <p>x @item.Quantity</p>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid #ccc;"></div>
+    }
+    @{
+        //Calculates the price of all the products in the cart
+        double Price = 0;
+        foreach (var item in ViewBag.ProductDetails)
+        {
+            Price = Price + item.Product.Price * item.Quantity;
+
+        }
+    }
+    <div class="text-right">
+        <h3 style="font-weight:bold;margin-top:1em">Total Price:</h3>
+        <p style="line-height: 0em;margin: 1em 0em 1em;padding-bottom:20px">@Math.Round(@Price, 2)€</p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = ViewBag.OrderDetails.OrderID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
